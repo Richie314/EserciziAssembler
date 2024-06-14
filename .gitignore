@@ -1,0 +1,10 @@
+*
+!*.s
+!*.pdf
+!*.txt
+!*.md
+!*.json
+!*.gitignore
+!*.vscode
+!*.c
+!*/

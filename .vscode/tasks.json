@@ -1,0 +1,73 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"type": "shell",
+			"linux": {
+				"command": "gcc -m32 -o \"${fileDirname}/${fileBasenameNoExtension}\" '-Wa,-a' '-Wa,--defsym,LINUX=1' > \"${fileDirname}/${fileBasenameNoExtension}.lst\" -g \"${workspaceFolder}/files/main.c\" \"${file}\"",
+			},
+			"problemMatcher": [
+				{
+					"owner": "assembly",
+					"fileLocation": ["autoDetect", "${workspaceFolder}"],
+					"pattern": {
+						"regexp": "^(.*?):(\\d+):\\s+(Error|Warning):\\s+(.*)$",
+						// "kind":"location",
+						"file": 1,
+						"location": 2,
+						"severity": 3,
+						"message": 4,
+						// "loop": true
+					}
+				},
+				{
+					"owner": "assembly",
+					"fileLocation": ["autoDetect", "${workspaceFolder}"],
+					"pattern": {
+						"regexp": "^(.*?):(\\d+):\\s+(.*)$",
+						// "kind":"location",
+						"file": 1,
+						"location": 2,
+						"message": 3
+					}
+				},
+				{
+					"owner": "assembly",
+					"fileLocation": ["autoDetect", "${workspaceFolder}"],
+					"pattern": {
+						"regexp": "^([^:]*):\\s+(Error|Warning):\\s+(.*)$",
+						"kind":"file",
+						"file": 1,
+						"severity": 2,
+						"message": 3,
+					}
+				}
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"focus": false,
+				"reveal": "silent",
+				"clear": true
+			}
+		},
+		{
+			"label": "run",
+			"type": "shell",
+			"linux": {
+				"command": "${fileDirname}/${fileBasenameNoExtension}",
+			},
+			"dependsOn":["build"],
+			"presentation": {
+				"focus": true,
+				"reveal": "always",
+				"clear": true
+			}
+		}
+	]
+}
